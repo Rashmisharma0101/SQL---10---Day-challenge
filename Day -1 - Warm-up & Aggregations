@@ -1,0 +1,37 @@
+Concept focus: GROUP BY, HAVING, CASE WHEN, aggregate functions
+Practice:
+
+1. Total revenue and average order value per customer.
+1. select customer_id, sum(order_amount), avg(order_amount) from orders group by customer_id
+
+2. Categorize customers as High / Medium / Low spenders (based on total spend).
+2. select customer_id, sum(order_amount), case
+when sum(order_amount) > 10000 then 'High'
+when sum(order_amount) between 5000 and 10000 then 'Medium'
+else 'Low Spenders'
+END as category_customer
+from orders
+group by customer_id
+
+3. Find total revenue by payment type.
+3. select payment_type, sum(order_amount) as sum_rev from orders
+group by payment_type
+order by sum_rev desc
+
+4. Find top 5 customers by total spend.
+4. select customer_id, sum(order_amount) as total_spend from orders
+group by customer_id order by total_spend desc limit 5
+
+to handle ties
+SELECT customer_id, total_spend
+FROM (
+  SELECT customer_id,
+         SUM(order_amount) AS total_spend,
+         RANK() OVER (ORDER BY SUM(order_amount) DESC) AS rnk
+  FROM orders
+  GROUP BY customer_id
+) ranked
+WHERE rnk <= 5;
+
+5. Count how many customers placed >3 orders.
+5. select customer_id, count(order_id) AS total_orders from orders group by customer_id having count(order_id) > 3
