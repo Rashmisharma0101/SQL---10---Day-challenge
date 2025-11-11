@@ -1,0 +1,16 @@
+Concept focus: Nested aggregation, multiple grouping columns, conditional sums
+Practice:
+
+1. Total revenue per city per month.
+1. select customers.city, sum(orders.order_amount) as total, month(orders.order_date) as mn from orders join customers
+on orders.customer_id  = orders.customer_id
+group by customers.city , month(orders.order_date)
+order by sum(orders.order_amount) desc
+
+Percentage of orders paid via COD per city.
+
+Calculate total and average amount per category per month.
+
+Identify top city by revenue each month (hint: use subquery).
+
+Find customers who purchased only from one category.
