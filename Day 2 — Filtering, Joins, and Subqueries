@@ -1,0 +1,26 @@
+Concept focus: INNER, LEFT, RIGHT JOIN, subqueries, IN, EXISTS
+Practice:
+
+1. Find customers who never placed an order.
+1. select customer_id from customers where customer_id not in (Select distinct customer_id from orders)
+
+2. List products that were never sold.
+2. select product_id from products where product_id not in (Select distinct product_id from orders)
+
+3. Get customers who spent more than the average customer spend.
+3. select customer_id, sum(amount) from orders group by customer_id 
+having sum(amount) > (select avg(amount) from (select sum(amount) as total_Spend from orders  group by customer_id) t
+)
+
+4. Retrieve orders that include more than 3 distinct products.
+4. select order_id, count(distinct product_id) as cnt from orders group by order_id having count(distinct product_id) > 3
+
+5. Find customers who placed an order in both Jan and Feb 2024.
+5. select customer_id from orders where month(order_date)  = 1 and customer_id in (select customer_id from orders where month(order_date)  = 2)
+ Another version
+
+SELECT customer_id
+FROM orders
+WHERE order_date BETWEEN '2024-01-01' AND '2024-02-29'
+GROUP BY customer_id
+HAVING COUNT(DISTINCT MONTH(order_date)) = 2;
