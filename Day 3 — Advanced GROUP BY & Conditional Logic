@@ -22,7 +22,19 @@ group by products.category , month(orders.order_date)
 order by sum(orders.order_amount) desc
 
 4. Identify top city by revenue each month.
-4. 
+4. with cte1 as (
+select month(orders.order_date) as mn, customers.city, sum(orders.order_amount) as revenue,
+rank() over (partition by month(orders.order_date) order by sum(orders.order_amount) desc) as rnk
+from customers join orders
+on customers.customer_id = orders.customer_id
+join order_items
+on order_items.order_id = orders.order_id
+join products
+on products.product_id = order_items.product_id
+GROUP BY MONTH(orders.order_date), customers.city
+)
+select cte1.mn, cte1.city, cte1.revenue from  cte1 where rnk = 1 order by cte1.revenue desc
+
 
 5. Find customers who purchased only from one category.
 5. select customer_id, count(distinct category) as cnt
