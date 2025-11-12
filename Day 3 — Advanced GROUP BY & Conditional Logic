@@ -8,7 +8,11 @@ group by customers.city , month(orders.order_date)
 order by sum(orders.order_amount) desc
 
 2. Percentage of orders paid via COD per city.
-2. 
+2. SELECT customers.city,
+    100.0 * SUM(CASE WHEN orders.payment_type = 'COD' THEN 1 ELSE 0 END) / COUNT(*) AS cod_percentage
+FROM orders
+JOIN customers ON orders.customer_id = customers.customer_id
+GROUP BY customers.city;
 
 3. Calculate total and average amount per category per month.
 3. select products.category,  month(orders.order_date) as mn , sum(orders.order_amount) as total, avg(orders.order_amount) as average 
