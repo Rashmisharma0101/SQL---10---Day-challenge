@@ -12,8 +12,17 @@ order by sum(orders.order_amount) desc
 from orders group by city
 
 3. Calculate total and average amount per category per month.
-3. 
+3. select products.category,  month(orders.order_date) as mn , sum(orders.order_amount) as total, avg(orders.order_amount) as average from orders join customers
+on orders.customer_id  = orders.customer_id
+group by products.category , month(orders.order_date)
+order by sum(orders.order_amount) desc
 
-Identify top city by revenue each month (hint: use subquery).
+4. Identify top city by revenue each month.
+4. with cte1 as (select customer.city, month(orders.order_date) as mn, sum(orders.order_amount) as revenue
+from customers join orders
+on customers.customer_id = ordes.customer_id
+group by customer.city, month(orders.order_date))
+select cte1.mn, cte1.city, max(revenue) from cte1 group by cte1.mn
 
-Find customers who purchased only from one category.
+5. Find customers who purchased only from one category.
+5. select
