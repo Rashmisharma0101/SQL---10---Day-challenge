@@ -1,0 +1,42 @@
+Concept focus: ROW_NUMBER, RANK, DENSE_RANK, OVER(PARTITION BY … ORDER BY …)
+Practice:
+
+1. Rank employees by salary within each department.
+1. select employee_id, department, salary, rank() over (partition by department order by salary desc) as rnk from employees 
+
+2. Top 3 highest-priced products within each category.
+2. with cte1 as (select category, product_id, price, dense_rank() over (partition by category order by price desc ) as rnk from products)
+select cte1.category, cte1.product_id, cte1.price, cte1.rnk from cte1 where cte1.rnk <= 3
+ORDER BY category, price DESC;  # You should explicitly tell SQL how to sort the final output:
+
+3. For each customer, rank orders by order_date.
+3. select customer_id, order_date, dense_rank() over (partition by customer_id order by order_date desc) as rnk from customers
+
+4. Compute running total of revenue per customer.
+4. select customer_id, sum(orders.quantity * products.price) as revenue over (partition by customer_id order by sum(orders.quantity * product.price) desc) as running_total
+from customers join orders
+on customers.customer_id = orders.customer_id
+join order_items
+on orders.order_id = order_items.order_id
+join products on
+products.product_id = order_items.product_id
+order by revenue desc
+
+5. Identify customers whose second purchase value is higher than their first.
+5. with cte1 as (select customer_id, order_date, order_amount, row_number()over (partition by customer_id order by order_date) as purchase_num
+from orders)
+
+select first.customer_id, first.order_amount, second.order_amount
+from cte1 as first
+join cte1 as second
+on first.customer_id = second.customer_id  and
+first.purchase_num = 1
+and second.purchase_num = 2
+where second.order_amount > first.order_amount;
+💡 Explain in interview: Difference between ROW_NUMBER vs RANK.
+
+✅ Conclusion
+Function	When to Use	Behavior	Works Safely Here?
+ROW_NUMBER()	You care about purchase sequence (1st, 2nd, etc.)	Always increments by 1	✅ Yes
+RANK()	You care about order by amount, allowing ties	Skips ranks for ties	⚠️ No (for “first” and “second” purchases by time)
+DENSE_RANK()	Similar to rank but no skips	Keeps consecutive ranks for ties	⚠️ Still no (creates multiple “2nd” purchases if ties)
