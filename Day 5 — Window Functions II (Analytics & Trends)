@@ -1,0 +1,22 @@
+Concept focus: LAG, LEAD, moving averages, growth %
+Practice:
+
+1. Month-over-month revenue growth %.
+1. with cte1 as (select orders.order_date, month(orders.order_date) as mn, sum(order_items.quantity * products.price) as revenue
+from orders join order_items
+on orders.order_id = order_items.order_id
+join products.product_id = order_items.product_id
+group by mn
+order by mn),
+cte2 as (select cte1.mn, cte1.order_date, cte1.revenue, lag() over (partition by mn order by cte1.revenue) as prev_revenue from cte1)
+select cte2.mn, cte2.order_date, coalesce(100.0*((cte2.revenue - cte2.prev_revenue)/cte2.prev_revenue), 'first_month') as growth_percentage
+from cte2
+
+7-day moving average of daily sales.
+
+Find customers whose spend increased vs previous month.
+
+Time difference (in days) between first and second purchase.
+
+For each category, show product’s % contribution to total category revenue.
+💡 Interview-ready topic: “How do you calculate growth rates in SQL?”
