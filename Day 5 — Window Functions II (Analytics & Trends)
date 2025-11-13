@@ -18,9 +18,14 @@ from cte2
 3. Find customers whose spend increased vs previous month.
 3. with cte1 as (select orders.customer_id, month(orders.order_date) as mn, sum(orders.amount) as total
 from orders
-group by orders.customer_id, mn
+group by orders.customer_id, mn),
+cte2 as (select cte1.customer_id, cte1.total, lag(cte1.total) over (partition by cte1.customer_id order by cte1.mn) as prev_revenue from cte1)
+select cte2.customer_id, coalesce((cte2.total - cte2.prev_revenue), 0) as change from cte2
+group by cte2.customer_id
+having cte2.total > cte2.prev_revenue
 
-Time difference (in days) between first and second purchase.
+4. Time difference (in days) between first and second purchase.
+4. 
 
-For each category, show product’s % contribution to total category revenue.
+5. For each category, show product’s % contribution to total category revenue.
 💡 Interview-ready topic: “How do you calculate growth rates in SQL?”
