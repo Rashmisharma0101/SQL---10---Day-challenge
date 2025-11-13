@@ -25,7 +25,14 @@ group by cte2.customer_id
 having cte2.total > cte2.prev_revenue
 
 4. Time difference (in days) between first and second purchase.
-4. 
+4. with cte1 as (select customer_id, row_number() over(partition by customer_id order by order_date) as rn from orders)
+select first.customer_id, datediff(first.order_date, second.order_date) as timediff from
+cte1 first join cte1 second
+on first.customer_id = second.customer_id and first.rn =  1 and second.rn = 2
+group by first.customer_id
+order by first_timediff
+
 
 5. For each category, show product’s % contribution to total category revenue.
+5. 
 💡 Interview-ready topic: “How do you calculate growth rates in SQL?”
