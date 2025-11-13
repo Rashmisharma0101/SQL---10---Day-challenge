@@ -34,5 +34,24 @@ order by first_timediff
 
 
 5. For each category, show product’s % contribution to total category revenue.
-5. 
+5. with cte1 as (select products.category, sum(order_items.quantity * order_items*unit_price) as cat_total
+from order_items join products
+on order_items.product_id = products.product_id
+join orders
+on orders.order_id = order_items.order_id
+group by products.category),
+cte2 as (select cte1.category, cte1.cat_total, order_items.product_id, sum(order_items.quantity * order_items*unit_price) 
+as product_total, cte1.cat_total
+from
+cte1 join products
+on cte1.category = products.category
+join order_items on
+products.product_id = order_items.product_id)
+select cte2.category, cte2.cat_total, cte2.product_total, (cte2.product_total /  cte2.cat_total)*100.0 as product_Contri
+from cte2
+group by cte2.category
+order by product_Contri desc
+
+
+
 💡 Interview-ready topic: “How do you calculate growth rates in SQL?”
