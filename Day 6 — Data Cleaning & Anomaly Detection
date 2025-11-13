@@ -1,0 +1,15 @@
+Concept focus: Handling NULLs, outliers, duplicates, conditional filters
+Practice:
+
+1. Columns with NULLs in more than 10% of rows.
+1. select product_id, 100.0*sum(case when product_id is null then 1 else 0 end) / count(*) as null_percent
+from 
+
+Identify duplicate customer records (same name & email).
+
+Detect orders 3× higher than customer’s avg order amount.
+
+Customers placing >5 orders in one day.
+
+Customers with missing city info but valid orders.
+💡 Discussion point: How you’d clean such data in real dashboards.
