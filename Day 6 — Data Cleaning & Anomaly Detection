@@ -2,14 +2,37 @@ Concept focus: Handling NULLs, outliers, duplicates, conditional filters
 Practice:
 
 1. Columns with NULLs in more than 10% of rows.
-1. select product_id, 100.0*sum(case when product_id is null then 1 else 0 end) / count(*) as null_percent
-from 
+1. 
 
-Identify duplicate customer records (same name & email).
+2. Identify duplicate customer records (same name & email).
+2. select customer_name, email from customers where customer_id  in (select customer_id from customers
+group by customer_id
+having count(email) > 1)
 
-Detect orders 3× higher than customer’s avg order amount.
+3. Detect orders 3× higher than customer’s avg order amount.
+3. with cte1 as (select  orders.customer_id, avg(orders.order_amount) as avg_amount from orders
+group by orders.customer_id)
+select distinct orders.customer_id, orders.order_amount from orders join cte1
+on orders.customer_id = cte1.customer_id
+group by orders.customer_id
+having orders.order_amount > 3*(cte1.avg_amount)
 
-Customers placing >5 orders in one day.
 
-Customers with missing city info but valid orders.
+4. Customers placing >5 orders in one day.
+4. with cte1 as (select customer_id, orders.order_date, count(order_id) as cnt
+from orders
+group by customer_id, orders.order_date)
+select cte1.customer_id from cte1
+having cnt > 5
+
+5. Customers with missing city info but valid orders.
+5. with cte1 as (select distinct customer_id from customers where customer_id in (select distinct customer_id from orders))
+select customers.customer_id, customers.city from cte1 join customers
+on cte1.customer_id - customers.customer_id
+where customers.city is null
+
+
+
+
+
 💡 Discussion point: How you’d clean such data in real dashboards.
