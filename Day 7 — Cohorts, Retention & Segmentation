@@ -12,7 +12,12 @@ and cte.mn = 2)
 select count(distinct cte2.customer_id) from cte2
 
 3. Total orders per cohort month.(The month in which a customer placed their first-ever order)
-3. 
+3. with cte1 as (select customer_id, min(month(order_date) as first_month from orders
+group by customer_id)
+select orders.customer_id, count(orders.order_id) from orders join cte1 on orders.customer_id = cte1.customer_id
+group by customer_id
+having month(orders.order_date) = cte1.first_month
+
 
 4. Categorize customers into Platinum / Gold / Silver tiers by total spend.
 4. 
