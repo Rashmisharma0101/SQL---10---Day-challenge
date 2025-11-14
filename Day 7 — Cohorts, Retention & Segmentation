@@ -28,5 +28,9 @@ from orders
 group by customer_id
 order by sum(orders.order_amount) desc
 
-Find churned customers (ordered in 2024 but not in 2025).
+5. Find churned customers (ordered in 2024 but not in 2025).
+5. with cte1 as (select customer_id, year(order_date) as yr from orders)
+select cte1.customer_id, cte1.yr from cte1 where cte1.customer_id not in (select cte1.customer_id, cte1.yr from cte1 where yr = 2025)
+and cte1.yr = 2024
+
 💡 Explain: How SQL can be used for retention dashboards.
