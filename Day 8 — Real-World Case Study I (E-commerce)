@@ -4,9 +4,17 @@ Tables: customers, orders, products, order_items
 Practice:
 
 1. Find highest-revenue category.
-1. 
+1. select product.category, sum(orders.order_amount) as revenue from 
+orders join order_items
+orders.order_id = order_items.order_id
+join products
+on order_items.product_id = products.product_id
+group by product.category
+order by revenue desc limit 1
 
-Average order value per category.
+2. Average order value per category.
+2. 
+
 
 Days when total sales exceeded the monthly average.
 
