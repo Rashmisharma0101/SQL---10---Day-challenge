@@ -13,12 +13,28 @@ group by product.category
 order by revenue desc limit 1
 
 2. Average order value per category.
-2. 
+2. select products.category, avg(orders.order_amount) as avg_value
+from orders join order_items
+orders.order_id = order_items.order_id
+join products
+on order_items.product_id = products.product_id
+group by products.category
+order by avg_value desc
 
+3. Days when total sales exceeded the monthly average.
+3. with cte1 as (select order_date, sum(order_amount) as daily_sales, month(order_date) as mn
+from orders
+group by order_date),
+cte2 as (select month(order_date) as mn, sum(order_amount) as monthly_sales
+from orders
+group by month(order_date)
+select distinct cte1.order_date, cte1.daily_sales, cte2.mn, cte2.monthly_sales from cte1 join cte2
+on cte1.mn = cte2.mn
+where cte1.daily_sales > cte2.monthly_sales
 
-Days when total sales exceeded the monthly average.
+4. Average orders per customer per month.
+4. 
 
-Average orders per customer per month.
 
 Payment type generating highest revenue.
 💡 Optional: Create CTEs for readability and reuse.
