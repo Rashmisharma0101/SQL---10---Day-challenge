@@ -1,0 +1,13 @@
+Concept focus: Date functions, grouping by derived columns, logic-based segmentation
+Practice:
+
+First purchase month for each customer (cohort).
+
+Number of customers who ordered in both Jan & Feb 2024 (retention).
+
+Total orders per cohort month.
+
+Categorize customers into Platinum / Gold / Silver tiers by total spend.
+
+Find churned customers (ordered in 2024 but not in 2025).
+💡 Explain: How SQL can be used for retention dashboards.
