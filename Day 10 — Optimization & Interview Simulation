@@ -1,0 +1,15 @@
+Concept focus: Query design thinking + explain plan readiness
+Practice / Discussion:
+
+Rewrite a query using CTE instead of subquery.
+
+Explain how you’d optimize a slow query joining 3 tables.
+
+Show same output using window function instead of GROUP BY.
+
+Create a view to store top-performing products.
+
+Simulate an end-to-end question:
+“Find top 3 customers by revenue in each month who increased spending vs the previous month.”
+
+💡 Mock interview tip: Be ready to explain your thinking process, not just syntax.
