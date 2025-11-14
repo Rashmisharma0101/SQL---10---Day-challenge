@@ -33,7 +33,10 @@ on cte1.mn = cte2.mn
 where cte1.daily_sales > cte2.monthly_sales
 
 4. Average orders per customer per month.
-4. 
+4. with cte1 as (select customer_id, month(order_date) as mn, count(order_id) as customer_count from orders
+group by customer_id , month(order_date))
+select cte1.customer_id, avg(cte1.customer_count) as monthly_avg from cte1
+group by cte1.customer_id
 
 
 Payment type generating highest revenue.
