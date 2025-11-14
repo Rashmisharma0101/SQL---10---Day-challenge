@@ -1,0 +1,36 @@
+customers
+customer_id
+first_name
+last_name
+email
+phone
+city
+state
+country
+signup_date
+
+📦 products
+product_id
+product_name
+category
+brand
+price
+stock_quantity
+created_at
+
+🧾 orders
+order_id
+customer_id
+order_date
+order_status
+payment_type
+shipping_cost
+order_amount
+
+🧩 order_items
+order_item_id
+order_id
+product_id
+quantity
+unit_price
+discount
