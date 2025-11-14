@@ -1,0 +1,13 @@
+Scenario: employees(emp_id, dept, salary, hire_date, manager_id) and projects(emp_id, project_id, hours_worked)
+Practice:
+
+2nd highest salary per department.
+
+Running total of salary expense per department.
+
+Average working hours per project.
+
+Employees who never worked on any project.
+
+Employees who joined before their manager.
+💡 HR analytics style question — very common in data analyst interviews.
