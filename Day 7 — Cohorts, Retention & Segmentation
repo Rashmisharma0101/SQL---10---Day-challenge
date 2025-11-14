@@ -1,13 +1,21 @@
 Concept focus: Date functions, grouping by derived columns, logic-based segmentation
 Practice:
 
-First purchase month for each customer (cohort).
+1. First purchase month for each customer (cohort).
+1. select customer_id, min(month(order_date)) as first_purchase_month from orders
+group by customer_id
 
-Number of customers who ordered in both Jan & Feb 2024 (retention).
+2. Number of customers who ordered in both Jan & Feb 2024 (retention).
+2. with cte1 as (select customer_id, month(order_date) as mn from orders),
+cte2 as (select cte1.customer_id, cte1.mn from cte1 where cte1.customer_id in (select cte1.customer_id, cte1.mn from cte1 where mn = 1)
+and cte.mn = 2)
+select count(distinct cte2.customer_id) from cte2
 
-Total orders per cohort month.
+3. Total orders per cohort month.(The month in which a customer placed their first-ever order)
+3. 
 
-Categorize customers into Platinum / Gold / Silver tiers by total spend.
+4. Categorize customers into Platinum / Gold / Silver tiers by total spend.
+4. 
 
 Find churned customers (ordered in 2024 but not in 2025).
 💡 Explain: How SQL can be used for retention dashboards.
