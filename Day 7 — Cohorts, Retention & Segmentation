@@ -18,9 +18,15 @@ select orders.customer_id, count(orders.order_id) from orders join cte1 on order
 group by customer_id
 having month(orders.order_date) = cte1.first_month
 
-
 4. Categorize customers into Platinum / Gold / Silver tiers by total spend.
-4. 
+4. select orders.customer_id, case
+when sum(orders.order_amount) > 10000 then 'Platinum'
+when sum(orders.order_amount) between 5000 and 10000 then 'Gold'
+else 'silver'
+end as customer_category
+from orders
+group by customer_id
+order by sum(orders.order_amount) desc
 
 Find churned customers (ordered in 2024 but not in 2025).
 💡 Explain: How SQL can be used for retention dashboards.
