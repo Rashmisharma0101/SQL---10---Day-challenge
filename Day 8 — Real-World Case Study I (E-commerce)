@@ -1,0 +1,15 @@
+Day 8 — Real-World Case Study I (E-commerce)
+
+Tables: customers, orders, products, order_items
+Practice:
+
+Find highest-revenue category.
+
+Average order value per category.
+
+Days when total sales exceeded the monthly average.
+
+Average orders per customer per month.
+
+Payment type generating highest revenue.
+💡 Optional: Create CTEs for readability and reuse.
