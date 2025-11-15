@@ -39,7 +39,8 @@ select cte1.customer_id, avg(cte1.customer_count) as monthly_avg from cte1
 group by cte1.customer_id
 
 5. Payment type generating highest revenue.
-5. select payment_type, sum(order_amount), 
+5. select payment_type, sum(order_amount) as revenue form orders
+group by payment_type order by revenue desc limit 1
 
 
 💡 Optional: Create CTEs for readability and reuse.
