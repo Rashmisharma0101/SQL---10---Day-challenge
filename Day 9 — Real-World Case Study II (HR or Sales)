@@ -1,13 +1,24 @@
 Scenario: employees(emp_id, dept, salary, hire_date, manager_id) and projects(emp_id, project_id, hours_worked)
 Practice:
 
-2nd highest salary per department.
+1. 2nd highest salary per department.
+1. with cte1 as (select department, salary, dense_rank() over (partition by department order by salary desc) as rnk
+from employees)
+select cte1.department, cte1.salary from cte1
+where rnk = 2
+group by cte1.department, order by cte1.salary desc
 
 Running total of salary expense per department.
 
-Average working hours per project.
+3. Average working hours per project.
+3. select project_id, avg(hours_worked) as avg_hrs from timesheets
+group by project_id, 
+order by avg_hrs desc
 
-Employees who never worked on any project.
+4. Employees who never worked on any project.
+4. select employee_id from employee where employee_id not in (select distict employee_id from timesheets)
 
-Employees who joined before their manager.
+5. Employees who joined before their manager.
+5. 
+
 💡 HR analytics style question — very common in data analyst interviews.
