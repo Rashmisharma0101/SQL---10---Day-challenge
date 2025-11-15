@@ -40,6 +40,8 @@ Employee Model
 
 employee_id
 
+mgr_id
+
 employee_name
 
 department
