@@ -34,3 +34,42 @@ product_id
 quantity
 unit_price
 discount
+
+Employee Model
+1. employees table (basic employee info)
+
+employee_id
+
+employee_name
+
+department
+
+role
+
+joining_date
+
+2. projects table
+
+project_id
+
+project_name
+
+start_date
+
+end_date
+
+3. timesheets or work_log table (this is the key one)
+
+This table captures how many hours each employee spent on each project.
+
+Typical columns:
+
+timesheet_id
+
+employee_id
+
+project_id
+
+date_worked
+
+hours_worked
