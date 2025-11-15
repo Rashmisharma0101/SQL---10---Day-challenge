@@ -11,9 +11,7 @@ Create a view to store top-performing products.
 
 Simulate an end-to-end question:
  - Find top 3 customers by revenue in each month who increased spending vs the previous month.”
- - with cte1 as (select customer_id,month(order_date) as mn, sum(order_amount) as spend
-from orders
-group by customer_id, month(order_date)
+ - 
 
 
 
