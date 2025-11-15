@@ -19,6 +19,9 @@ order by avg_hrs desc
 4. select employee_id from employee where employee_id not in (select distict employee_id from timesheets)
 
 5. Employees who joined before their manager.
-5. 
+5. select e2.employee_id
+from employee e1 join employee e2
+on e2.employee_id = e1.mgr_id
+where e2.joining_date > e1.joining_date
 
 💡 HR analytics style question — very common in data analyst interviews.
